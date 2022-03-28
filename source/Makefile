@@ -71,8 +71,8 @@ PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
 
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
-FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
-FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
+FRTOS_CMIS_INC_DIR = ./Middlewares/FreeRTOS/Source/CMSIS_RTOS
+FRTOS_INC_DIR = ./Middlewares/FreeRTOS/Source/include
 DRIVER_INC_DIR =./Core/Drivers
 BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
