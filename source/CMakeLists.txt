@@ -5,9 +5,12 @@ set(bin_file ${application_name}.bin)
 set(hex_file ${application_name}.hex)
 set(map_file ${application_name}.map)
 
+set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/CMake")
+
+
 
 if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
-    set(CMAKE_TOOLCHAIN_FILE "CMake/stm32f1.cmake" CACHE PATH "toolchain file")
+    set(CMAKE_TOOLCHAIN_FILE "CMake/arm-gcc.cmake" CACHE PATH "toolchain file")
     include(${CMAKE_TOOLCHAIN_FILE})
 elseif(MODEL STREQUAL Pinecil)
 
@@ -44,9 +47,6 @@ add_executable(${elf_file}
 
 
 
-set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/CMake")
-
-
 
 include_directories(
   Core
@@ -60,6 +60,15 @@ add_subdirectory(Middlewares)
 target_link_libraries(${elf_file} PUBLIC BSP mainSource threads FreeRTOS)
 include(shared-compiler-settings)
 
+if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
+    include(stm32f1)
+elseif(MODEL STREQUAL Pinecil)
+
+elseif(MODEL STREQUAL MHP30)
+
+else()
+ message(FATAL_ERROR "You must specify a model")
+endif()
 
 
 # set additional for compiler and linker: optimization and generate map file

@@ -45,3 +45,6 @@ add_library(BSPImplementation ${sources})
 target_include_directories(BSPImplementation PUBLIC . ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/CMSIS/Include ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/CMSIS/Device ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/STM32F1xx_HAL_Driver/Inc)
 target_compile_definitions (BSPImplementation PUBLIC "-D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3 -D ARM_MATH_CM3 	-D STM32F10X_MD")
 target_link_libraries(BSPImplementation PUBLIC brieflz BSP mainSource drivers)
+
+
+target_link_libraries(${elf_file} PUBLIC -Wl,--defsym=__FLASH_SIZE__=64k -Wl,--defsym=__BOOTLDR_SIZE__=0x4000)
