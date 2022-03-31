@@ -57,7 +57,7 @@ add_subdirectory(Middlewares)
 
 
 
-target_link_libraries(${elf_file} PUBLIC BSP mainSource threads FreeRTOS languages)
+target_link_libraries(${elf_file} PUBLIC BSP mainSource threads FreeRTOS languages drivers)
 
 if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
     include(stm32f1)
@@ -81,17 +81,7 @@ target_link_libraries(${elf_file} PRIVATE ${additional_linker_flags})
 target_link_libraries(${elf_file} PUBLIC "-g -Wl,--gc-sections")
 
 
-# show size of resulting firmware image
-add_custom_target(${elf_file}-size DEPENDS ${elf_file} COMMAND ${SIZE_EXECUTABLE} -B ${elf_file})
-
-# generate extended listing
-add_custom_target(${lss_file} DEPENDS ${elf_file} COMMAND ${OBJDUMP_EXECUTABLE} -S ${elf_file} > ${lss_file})
 
 # create binary and hex files
-add_custom_target(${hex_file} DEPENDS ${elf_file} COMMAND ${OBJCOPY_EXECUTABLE} -Oihex ${elf_file} ${hex_file})
-add_custom_target(${bin_file} DEPENDS ${elf_file} COMMAND ${OBJCOPY_EXECUTABLE} -Obinary ${elf_file} ${bin_file})
-
-add_custom_target(${application_name} ALL DEPENDS ${elf_file}-size ${bin_file} ${hex_file} ${lss_file})
-
-
-# Set path to our raw modules
+add_custom_target(${hex_file} DEPENDS ${elf_file} COMMAND ${CMAKE_OBJCOPY} -O ihex ${elf_file} ${hex_file})
+add_custom_target(${bin_file} DEPENDS ${elf_file} COMMAND ${CMAKE_OBJCOPY} -O binary ${elf_file} ${bin_file})
