@@ -64,11 +64,11 @@ target_link_libraries(${elf_file} PUBLIC BSP mainSource threads FreeRTOS languag
 if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
     include(stm32f1)
 elseif(MODEL STREQUAL Pinecil)
-
+    include(gd32vf1)
 elseif(MODEL STREQUAL MHP30)
-
+    include(stm32f1)
 else()
- message(FATAL_ERROR "You must specify a model")
+    message(FATAL_ERROR "You must specify a model")
 endif()
 include(shared-compiler-settings)
 

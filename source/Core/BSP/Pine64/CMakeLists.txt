@@ -1,8 +1,10 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vendor/NMSOS/Core/Include)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vendor/OS/FreeRTOS/Source/portage/GCC)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vendor/NMSIS/Core/Include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vendor/OS/FreeRTOS/Source/portable/GCC)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vendor/SoC/gd32vf103/Common/Include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vendor/SoC/gd32vf103/Common/Source/Stubs/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vendor/SoC/gd32vf103/Common/Source/Stubs/)
+
 
 set(sources 
 BSP.cpp   
@@ -62,12 +64,12 @@ ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/SoC/gd32vf103/Common/Source/Stubs/sbrk.c
 
 
 add_library(BSPImplementation ${sources})
-target_include_directories(BSPImplementation PUBLIC . ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/CMSIS/Include ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/CMSIS/Device ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/STM32F1xx_HAL_Driver/Inc)
-target_compile_definitions (BSPImplementation PUBLIC "-D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3 -D ARM_MATH_CM3 	-D STM32F10X_MD")
+target_include_directories(BSPImplementation PUBLIC .  ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/NMSIS/Core/Include ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/OS/FreeRTOS/Source/portable/GCC ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/SoC/gd32vf103/Common/Include ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/SoC/gd32vf103/Common/Source/Stubs/ ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/SoC/gd32vf103/Common/Source/Stubs/)
+target_compile_definitions (BSPImplementation PUBLIC -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP -DUSE_RTOS_SYSTICK  -DVECT_TAB_OFFSET=0U)
 target_link_libraries(BSPImplementation PUBLIC brieflz BSP mainSource drivers)
 
 
-target_link_libraries(${elf_file} PUBLIC -Wl,--defsym=__FLASH_SIZE__=64k -Wl,--defsym=__BOOTLDR_SIZE__=0x4000)
+target_link_libraries(${elf_file} PUBLIC -Wl,--defsym=__FLASH_SIZE__=128k -Wl,--defsym=__BOOTLDR_SIZE__=0)
 
-set(DEVICE_DFU_ADDRESS 0x08004000)
-set(DEVICE_DFU_VID_PID 0x1209:0xDB42)
+set(DEVICE_DFU_ADDRESS 0x08000000)
+set(DEVICE_DFU_VID_PID 0x28E9:0x0189)
