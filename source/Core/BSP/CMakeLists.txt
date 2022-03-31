@@ -7,11 +7,10 @@ BSP_Common.c
 
 add_library(BSP ${sources})
 target_include_directories(BSP PUBLIC .)
-target_link_libraries(BSP PUBLIC mainSource)
+target_link_libraries(BSP PUBLIC mainSource BSPImplementation)
 
 if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
     add_subdirectory(Miniware)  
-    target_link_libraries(BSP PUBLIC BSPImplementation)
 elseif(MODEL STREQUAL Pinecil)
     add_subdirectory(Pine64)  
 elseif(MODEL STREQUAL MHP30)

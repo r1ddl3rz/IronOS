@@ -15,7 +15,6 @@ preRTOS.cpp
 QC_GPIO.cpp
 Setup.cpp
 startup_stm32f103t8ux.S
-stm32f103.ld
 stm32f1xx_hal_msp.c
 stm32f1xx_hal_timebase_TIM.c
 stm32f1xx_it.c
@@ -48,3 +47,6 @@ target_link_libraries(BSPImplementation PUBLIC brieflz BSP mainSource drivers)
 
 
 target_link_libraries(${elf_file} PUBLIC -Wl,--defsym=__FLASH_SIZE__=64k -Wl,--defsym=__BOOTLDR_SIZE__=0x4000)
+
+set(DEVICE_DFU_ADDRESS 0x08004000)
+set(DEVICE_DFU_VID_PID 0x1209:0xDB42)

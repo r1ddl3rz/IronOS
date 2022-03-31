@@ -13,9 +13,11 @@ if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
     set(CMAKE_TOOLCHAIN_FILE "CMake/arm-gcc.cmake" CACHE PATH "toolchain file")
     include(${CMAKE_TOOLCHAIN_FILE})
 elseif(MODEL STREQUAL Pinecil)
-
+    set(CMAKE_TOOLCHAIN_FILE "CMake/riscv-gcc.cmake" CACHE PATH "toolchain file")
+    include(${CMAKE_TOOLCHAIN_FILE})
 elseif(MODEL STREQUAL MHP30)
-
+    set(CMAKE_TOOLCHAIN_FILE "CMake/arm-gcc.cmake" CACHE PATH "toolchain file")
+    include(${CMAKE_TOOLCHAIN_FILE})
 else()
  message(FATAL_ERROR "You must specify a model")
 endif()
