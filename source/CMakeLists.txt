@@ -57,8 +57,7 @@ add_subdirectory(Middlewares)
 
 
 
-target_link_libraries(${elf_file} PUBLIC BSP mainSource threads FreeRTOS)
-include(shared-compiler-settings)
+target_link_libraries(${elf_file} PUBLIC BSP mainSource threads FreeRTOS languages)
 
 if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
     include(stm32f1)
@@ -69,6 +68,7 @@ elseif(MODEL STREQUAL MHP30)
 else()
  message(FATAL_ERROR "You must specify a model")
 endif()
+include(shared-compiler-settings)
 
 
 # set additional for compiler and linker: optimization and generate map file

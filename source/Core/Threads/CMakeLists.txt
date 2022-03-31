@@ -10,5 +10,4 @@ POWThread.cpp
 
 add_library(threads ${sources})
 target_include_directories(threads PUBLIC .)
-
-target_link_libraries(threads PUBLIC BSP FreeRTOS)
+target_link_libraries(threads PUBLIC BSP FreeRTOS drivers)

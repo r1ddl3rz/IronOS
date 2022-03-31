@@ -7,3 +7,4 @@ depack.c
 
 
 add_library(brieflz ${sources})
+target_include_directories(brieflz PUBLIC .)

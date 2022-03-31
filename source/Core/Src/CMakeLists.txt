@@ -14,4 +14,4 @@ Translation.cpp
 
 add_library(mainSource ${sources})
 target_include_directories(mainSource PUBLIC .)
-target_link_libraries(mainSource PUBLIC brieflz BSP FreeRTOS drivers)
+target_link_libraries(mainSource PUBLIC brieflz BSP FreeRTOS drivers languages)
