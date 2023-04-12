@@ -22,6 +22,7 @@
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script> 
 </head>
 
@@ -115,7 +116,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>Translations</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/ralim/IronOS/edit/master/docs/Translation.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/Translation.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -124,9 +125,12 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="translation">Translation</h1>
-<p>If you would like to contribute a translation, use the <a href="http://htmlpreview.github.io/?https://github.com/Ralim/ts100/blob/master/Translations/TranslationEditor.html">Translation Editor</a>.</p>
-<p><a href="https://github.com/Ralim/ts100/tree/master/Translations">Open a reference language file and optionally a target language file</a>.</p>
+<p>At the present time the main way of performing translations is to open a PR to this repository.
+All translations are stored as <code>json</code> files in the repository. Currently there is ongoing work to look into a more user friendly method of editing translations than these but for now these are reliable.</p>
 <p>You can create a pull request with the new / updated json configuration file, and this will include this language into the new builds for the firmware.</p>
+<p>For testing you can build locally and test of course; but if you dont want to figure out the build environment; you can just open a PR and github will build the firmware for you using the <em>actions</em> feature.</p>
+<p>This means that once you have a github account you can perform all of your edits inside Github should this be desired.</p>
+<p>Translations are <em>NOT</em> accepted via issues/discussions or email.</p>
               
             </div>
           </div><footer>
