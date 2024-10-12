@@ -8,7 +8,7 @@
     <title>Power - IronOS</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
@@ -17,13 +17,12 @@
         var mkdocs_page_url = "/IronOS/Power/";
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -35,7 +34,7 @@
           <a href=".." class="icon icon-home"> IronOS
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -70,11 +69,13 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../DebugMenu/">Debug Menu</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Power</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Power</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#use-an-ohm-calculator-to-quickly-derive-watts">Use an Ohm calculator to quickly derive watts.</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#output-control-regulation">Output Control &amp; Regulation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#power-sources">Power sources</a>
     </li>
     </ul>
                   </li>
@@ -89,11 +90,17 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../HallSensor/">Hall Sensor (Pinecil)</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Bluetooth/">Bluetooth (Pinecil V2)</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware Notes</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../PowerSources/">Power sources</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../PortingToNewDevice/">New Hardware Requirements</a>
                   </li>
               </ul>
               <ul>
@@ -102,6 +109,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../Development/">Development</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../History/">Changelog</a>
                 </li>
               </ul>
       </div>
@@ -117,9 +128,9 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Operation &raquo;</li>
-      <li>Power</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Operation</li>
+      <li class="breadcrumb-item active">Power</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/Power.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -135,129 +146,131 @@ This means that the electronics in the handle can only turn the heating element 
 This <em>means</em> that the power provided in the tip is 100% controlled by the supply voltage used (higher voltage PSU = higher performance).</p>
 <p>Irons at their simplest are just a resistor (Ω) connected to your power source via a switch.</p>
 <ul>
-<li>When the switch is on, the power in the resistor is: $P(watts) = V(volts) \times\ I(current=amps)$</li>
-<li>Current through the resistor is:  $I(amps) = V(volts) ÷ Ω (resistance)$</li>
+<li>When the switch is on, the power in the resistor is: <em><code>P(watts) = V(volts) \times\ I(current=amps)</code></em></li>
+<li>Current through the resistor is:  <em><code>I(amps) = V(volts) ÷ Ω (resistance)</code></em></li>
 <li>Combining these gives some common equations for Power</li>
 </ul>
-<p>$P(watts) = V(volts) * I(amps)$ or $P = V^2 ÷ Ω$</p>
-<p>The resistance of the tip is a fixed constant in ohms (Ω):
-- 6.2 Ω  Pine64 short tip
-- 8.0 Ω  TS100/Pinecil long tip
-- 4.5 Ω  TS80(P)</p>
+<p><em><code>P(watts) = V(volts) * I(amps)</code></em> or <em><code>P = V^2 ÷ Ω</code></em></p>
+<p>The resistance of the tip is a fixed constant in ohms (Ω):</p>
+<ul>
+<li>6.2 Ω  Pine64 short tip</li>
+<li>8.0 Ω  TS100/Pinecil long tip</li>
+<li>4.5 Ω  TS80(P)</li>
+</ul>
 <p>This means the power delivered to the soldering tip is proportional to the voltage squared.
 Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies and may issue a <code>Thermal Runaway</code> message (weak power supply).</p>
 <h4 id="use-an-ohm-calculator-to-quickly-derive-watts">Use an <a href="https://www.rapidtables.com/calc/electric/power-calculator.html#dc">Ohm calculator</a> to quickly derive watts.</h4>
 <table>
 <thead>
 <tr>
-<th align="center">Type</th>
-<th align="center">Volts</th>
-<th align="center">/</th>
-<th align="center">Tip Ω</th>
-<th align="center">=</th>
-<th align="center">Amps</th>
-<th align="center">*</th>
-<th align="center">Volts</th>
-<th align="center">=</th>
-<th align="center">Watts</th>
+<th style="text-align: center;">Type</th>
+<th style="text-align: center;">Volts</th>
+<th style="text-align: center;">/</th>
+<th style="text-align: center;">Tip Ω</th>
+<th style="text-align: center;">=</th>
+<th style="text-align: center;">Amps</th>
+<th style="text-align: center;">*</th>
+<th style="text-align: center;">Volts</th>
+<th style="text-align: center;">=</th>
+<th style="text-align: center;">Watts</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">USB QC3.0</td>
-<td align="center">9V</td>
-<td align="center">/</td>
-<td align="center">4.5 Ω</td>
-<td align="center">=</td>
-<td align="center">2.0A</td>
-<td align="center">*</td>
-<td align="center">9V</td>
-<td align="center">=</td>
-<td align="center">18W</td>
+<td style="text-align: center;">USB QC3.0</td>
+<td style="text-align: center;">9V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">4.5 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">2.0A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">9V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">18W</td>
 </tr>
 <tr>
-<td align="center">USB-C PD</td>
-<td align="center">12V</td>
-<td align="center">/</td>
-<td align="center">4.5 Ω</td>
-<td align="center">=</td>
-<td align="center">3.0A</td>
-<td align="center">*</td>
-<td align="center">12V</td>
-<td align="center">=</td>
-<td align="center">32W</td>
+<td style="text-align: center;">USB-C PD</td>
+<td style="text-align: center;">12V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">4.5 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.0A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">12V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">32W</td>
 </tr>
 <tr>
-<td align="center">USB-C PD</td>
-<td align="center">20V</td>
-<td align="center">/</td>
-<td align="center">8.0 Ω</td>
-<td align="center">=</td>
-<td align="center">2.5A</td>
-<td align="center">*</td>
-<td align="center">20V</td>
-<td align="center">=</td>
-<td align="center">50W</td>
+<td style="text-align: center;">USB-C PD</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">8.0 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">2.5A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">50W</td>
 </tr>
 <tr>
-<td align="center">USB-C PD</td>
-<td align="center">20V</td>
-<td align="center">/</td>
-<td align="center">6.2 Ω</td>
-<td align="center">=</td>
-<td align="center">3.2A</td>
-<td align="center">*</td>
-<td align="center">20V</td>
-<td align="center">=</td>
-<td align="center">64W</td>
+<td style="text-align: center;">USB-C PD</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">6.2 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.2A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">64W</td>
 </tr>
 <tr>
-<td align="center">DC Barrel</td>
-<td align="center">24V</td>
-<td align="center">/</td>
-<td align="center">8.0 Ω</td>
-<td align="center">=</td>
-<td align="center">3.0A</td>
-<td align="center">*</td>
-<td align="center">24V</td>
-<td align="center">=</td>
-<td align="center">72W</td>
+<td style="text-align: center;">DC Barrel</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">8.0 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.0A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">72W</td>
 </tr>
 <tr>
-<td align="center">DC Barrel</td>
-<td align="center">24V</td>
-<td align="center">/</td>
-<td align="center">6.2 Ω</td>
-<td align="center">=</td>
-<td align="center">3.8A</td>
-<td align="center">*</td>
-<td align="center">24V</td>
-<td align="center">=</td>
-<td align="center">92W</td>
+<td style="text-align: center;">DC Barrel</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">6.2 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.8A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">92W</td>
 </tr>
 <tr>
-<td align="center">EPR PD3.1</td>
-<td align="center">28V</td>
-<td align="center">/</td>
-<td align="center">8.0 Ω</td>
-<td align="center">=</td>
-<td align="center">3.5A</td>
-<td align="center">*</td>
-<td align="center">28V</td>
-<td align="center">=</td>
-<td align="center">98W</td>
+<td style="text-align: center;">EPR PD3.1</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">8.0 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.5A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">98W</td>
 </tr>
 <tr>
-<td align="center">EPR PD3.1</td>
-<td align="center">28V</td>
-<td align="center">/</td>
-<td align="center">6.2 Ω</td>
-<td align="center">=</td>
-<td align="center">4.5A</td>
-<td align="center">*</td>
-<td align="center">28V</td>
-<td align="center">=</td>
-<td align="center">126W</td>
+<td style="text-align: center;">EPR PD3.1</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">6.2 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">4.5A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">126W</td>
 </tr>
 </tbody>
 </table>
@@ -266,6 +279,8 @@ Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies a
 <p>To measure the tip temperature in the iron, the iron has a small op-amp connected across the terminals at the cold end of the tip. This is setup to measure the voltage across the same terminals that are used to power the tip. In order to read the very small voltage generated by the <a href="https://ralim.github.io/IronOS/Temperature/">thermocouple cold junction</a>, the iron's output must be turned off for a moment.</p>
 <p>Once the output is turned off (via the FET), the system has a recovery time as the tip capacitance discharges and the op-amp exits saturation. After this delay period, the MCU's ADC (analog-to-digital converter) samples the output of the op-amp 8 times quickly and then sets a flag to turn the PWM output back on.
 This enforces a small dead time in the output signal while this occurs, so there is a balance between sampling the temperature often to maintain a stable tip temperature control and sampling less often to increase the maximum power deliverable to the tip (<a href="https://ralim.github.io/IronOS/Temperature/#complexity-of-measurement">see Complexity of measurement</a>).</p>
+<h2 id="power-sources">Power sources</h2>
+<p>Supported by IronOS hardware may use different power sources (chargers/powerbanks/battery packs) with different standards &amp; protocols (QC/PD/etc). For more information collected by the community on that, please, <a href="https://ralim.github.io/IronOS/PowerSources/">see the related documentation section</a>.</p>
               
             </div>
           </div><footer>
@@ -305,14 +320,15 @@ This enforces a small dead time in the output signal while this occurs, so there
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
